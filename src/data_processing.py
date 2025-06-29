@@ -70,7 +70,7 @@ categorical_imputer = SimpleImputer(strategy='most_frequent')
 
 
 # Define categorical encoder
-categorical_encoder = OneHotEncoder(sparse=False, handle_unknown='ignore')
+categorical_encoder = OneHotEncoder(sparse_output=False, handle_unknown='ignore')
 
 
 # Define scaler for numerical features
