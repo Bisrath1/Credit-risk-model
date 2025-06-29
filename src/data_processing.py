@@ -39,3 +39,24 @@ class AggregateFeatures(BaseEstimator, TransformerMixin):
         X = X.merge(agg_df, on='CustomerId', how='left')
         
         return X
+    
+
+class TemporalFeatures(BaseEstimator, TransformerMixin):
+    def __init__(self):
+        pass
+    
+    def fit(self, X, y=None):
+        return self
+    
+    def transform(self, X):
+        X = X.copy()
+        # Convert TransactionStartTime to datetime
+        X['TransactionStartTime'] = pd.to_datetime(X['TransactionStartTime'])
+        
+        # Extract temporal features
+        X['transaction_hour'] = X['TransactionStartTime'].dt.hour
+        X['transaction_day'] = X['TransactionStartTime'].dt.day
+        X['transaction_month'] = X['TransactionStartTime'].dt.month
+        X['transaction_year'] = X['TransactionStartTime'].dt.year
+        
+        return X
