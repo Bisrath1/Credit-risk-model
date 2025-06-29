@@ -67,3 +67,7 @@ class TemporalFeatures(BaseEstimator, TransformerMixin):
 # Define imputers for numerical and categorical features
 numerical_imputer = SimpleImputer(strategy='median')
 categorical_imputer = SimpleImputer(strategy='most_frequent')
+
+
+# Define categorical encoder
+categorical_encoder = OneHotEncoder(sparse=False, handle_unknown='ignore')
