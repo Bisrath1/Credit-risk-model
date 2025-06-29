@@ -41,6 +41,8 @@ class AggregateFeatures(BaseEstimator, TransformerMixin):
         return X
     
 
+
+
 class TemporalFeatures(BaseEstimator, TransformerMixin):
     def __init__(self):
         pass
@@ -60,3 +62,8 @@ class TemporalFeatures(BaseEstimator, TransformerMixin):
         X['transaction_year'] = X['TransactionStartTime'].dt.year
         
         return X
+    
+
+# Define imputers for numerical and categorical features
+numerical_imputer = SimpleImputer(strategy='median')
+categorical_imputer = SimpleImputer(strategy='most_frequent')
