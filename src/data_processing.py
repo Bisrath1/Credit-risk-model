@@ -75,3 +75,6 @@ categorical_encoder = OneHotEncoder(sparse=False, handle_unknown='ignore')
 
 # Define scaler for numerical features
 numerical_scaler = StandardScaler()
+
+# Define WoE transformer (to be used after proxy variable is created)
+woe_transformer = WOE()
