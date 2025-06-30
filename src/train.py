@@ -63,4 +63,37 @@ models = {
 # Train and evaluate each model
 for model_name, model in models.items():
     trained_model = train_model(model, model_name, X_train, y_train, X_test, y_test)
-    
+
+
+# src/train.py (continued)
+from sklearn.model_selection import GridSearchCV
+
+def tune_model():
+    rf = RandomForestClassifier(random_state=42)
+    param_grid = {
+        "n_estimators": [50, 100, 200],
+        "max_depth": [None, 10, 20],
+        "min_samples_split": [2, 5]
+    }
+    grid_search = GridSearchCV(rf, param_grid, cv=5, scoring="roc_auc", n_jobs=-1)
+    grid_search.fit(X_train, y_train)
+
+    # Log best parameters and model
+    with mlflow.start_run(run_name="RandomForest_Tuned"):
+        mlflow.log_params(grid_search.best_params_)
+        mlflow.log_metric("best_roc_auc", grid_search.best_score_)
+        mlflow.sklearn.log_model(grid_search.best_estimator_, "RandomForest_Tuned")
+
+        # Evaluate on test set
+        y_pred = grid_search.predict(X_test)
+        y_pred_proba = grid_search.predict_proba(X_test)[:, 1]
+        roc_auc = roc_auc_score(y_test, y_pred_proba)
+        mlflow.log_metric("test_roc_auc", roc_auc)
+
+        print(f"Tuned RandomForest Best Params: {grid_search.best_params_}")
+        print(f"Tuned RandomForest Test ROC-AUC: {roc_auc:.4f}")
+
+    return grid_search.best_estimator_
+
+# Run hyperparameter tuning
+best_rf = tune_model()
