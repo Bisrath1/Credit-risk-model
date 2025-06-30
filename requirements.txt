@@ -7,3 +7,7 @@ jupyter
 scikit-learn
 mlflow
 pytest
+
+fastapi
+uvicorn
+flake8
