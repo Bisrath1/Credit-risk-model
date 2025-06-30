@@ -9,7 +9,8 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 
 # Load processed data (assumes processed data from Task 3 and Task 4)
 data = pd.read_csv(r"C:\10x AIMastery\Credit-risk-model\data\processed\processed_data.csv")  # Adjust path as needed
-X = data.drop(columns=["is_high_risk"])  # Features
+X = data.drop(columns=["is_high_risk", "CustomerId"])
+
 y = data["is_high_risk"]  # Target (from Task 4)
 
 # Split data
@@ -97,3 +98,12 @@ def tune_model():
 
 # Run hyperparameter tuning
 best_rf = tune_model()
+
+
+# src/train.py (continued)
+import mlflow
+from mlflow.models import Model
+
+# Register the best model (example: assuming RandomForest_Tuned is the best)
+model_uri = "runs:/<run_id>/RandomForest_Tuned"  # Replace <run_id> with actual run ID
+mlflow.register_model(model_uri, "CreditRiskModel")
