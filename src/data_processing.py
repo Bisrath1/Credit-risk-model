@@ -327,6 +327,26 @@ def process_data(input_path, output_path):
         logger.error(f"Error in process_data: {str(e)}")
         raise
 
+# src/data_processing.py
+import pandas as pd
+
+def calculate_rfm(data, snapshot_date):
+    """
+    Calculate RFM metrics for each customer.
+    """
+    data["TransactionStartTime"] = pd.to_datetime(data["TransactionStartTime"])
+    snapshot_date = pd.to_datetime(snapshot_date)
+    rfm = data.groupby("CustomerId").agg({
+        "TransactionStartTime": lambda x: (snapshot_date - x.max()).days,  # Recency
+        "TransactionId": "count",  # Frequency
+        "Amount": "sum"  # Monetary
+    }).rename(columns={
+        "TransactionStartTime": "Recency",
+        "TransactionId": "Frequency",
+        "Amount": "Monetary"
+    })
+    return rfm.reset_index()
+
 
 if __name__ == "__main__":
     input_path = r"C:\10x AIMastery\Credit-risk-model\data\raw\data.csv"
