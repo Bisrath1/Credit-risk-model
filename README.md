@@ -75,7 +75,7 @@ credit-risk-model/
 - **Prerequisites**: Python 3.9, Docker, Git
 - **Installation**:
   ```bash
-  git clone <https://github.com/Bisrath1/Credit-risk-model.git>
+  git clone https://github.com/Bisrath1/Credit-risk-model.git
   python -m venv venv
   source venv/bin/activate
   pip install -r requirements.txt
