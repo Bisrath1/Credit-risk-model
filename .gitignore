@@ -1,0 +1,21 @@
+Data directories
+data/
+*.csv
+
+Python
+pycache/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.venv/
+
+MLflow artifacts
+mlruns/
+
+Docker
+*.log
+
+Show in sidebar
