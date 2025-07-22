@@ -1,18 +1,19 @@
-from pydantic import BaseModel
-from typing import List
+from pydantic import BaseModel, Field
+from typing import Optional
 
 class CustomerData(BaseModel):
-    Recency: int
-    Frequency: int
-    Monetary: float
-    TransactionHour: int
-    TransactionDay: int
-    TransactionMonth: int
-    TransactionYear: int
-    ProductCategory_airtime: int
-    ProductCategory_financial_services: int
-    ProductCategory_movies: int
-    # Add other one-hot encoded or numerical features as per your processed dataset
+    CustomerId: Optional[str] = Field(default=None, description="Customer unique identifier")
+    CreditScore: int
+    Age: int
+    Tenure: int
+    Balance: float
+    NumOfProducts: int
+    HasCrCard: int
+    IsActiveMember: int
+    EstimatedSalary: float
+    Gender_Female: int
+    Geography_Germany: int
+    Geography_Spain: int
 
 class PredictionResponse(BaseModel):
     customer_id: str
